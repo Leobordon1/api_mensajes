@@ -14,6 +14,20 @@ app = FastAPI()
 # Base de datos simulada (lista en memoria)
 mensajes_db: List[Mensaje] = []
 
+# Ruta de bienvenida
+@app.get("/")
+def inicio():
+    return {
+        "mensaje": "Bienvenido a la API de mensajes de Leo",
+        "endpoints_disponibles": [
+            "GET /mensajes",
+            "GET /mensajes/{id}",
+            "POST /mensajes",
+            "PUT /mensajes/{id}",
+            "DELETE /mensajes/{id}"
+        ]
+    }
+
 @app.post("/mensajes", response_model=Mensaje)
 def crear_mensaje(mensaje: Mensaje):
     mensaje.id = len(mensajes_db) + 1
